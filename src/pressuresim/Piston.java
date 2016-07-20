@@ -51,7 +51,7 @@ public class Piston {
 		this.display_forces = true;
 		this.display_k = true;
 
-		this.hand = new Hand(this.x, this.y, false, parent, box2d, rData);
+		this.hand = new Hand(this.x, this.y, true, parent, box2d, rData);
 		this.anchor = new Anchor(this.x + this.originalLen, this.y, parent, box2d);
 
 		// Import photo

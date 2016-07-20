@@ -42,8 +42,8 @@ public class Hand implements PConstants {
 		this.parent = p;
 		this.box2d = b2;
 		this.x = _x;
-		this.fixed_y = this.y;
 		this.y = _y;
+		this.fixed_y = this.y;
 		this.fixed = _fixed;
 		this.rData = rData;
 
@@ -95,8 +95,11 @@ public class Hand implements PConstants {
 		if (mj != null) {
 			
 			if(!rData.isHapkitMode()){
-				this.mousePosUpdate(parent.mouseX, parent.mouseY);
-//				this.mousePosUpdate(parent.mouseX, this.fixed_y);
+				if (!this.fixed) {
+					this.mousePosUpdate(parent.mouseX, parent.mouseY);
+				} else {
+					this.mousePosUpdate(parent.mouseX, this.fixed_y);
+				}
 			}
 			
 			// We can get the two anchor points
@@ -119,10 +122,13 @@ public class Hand implements PConstants {
 		this.y = (int)pos.y;
 		
 		parent.pushMatrix();
-		parent.translate(this.x, this.y); // Move the center of the new coordinate system to the place where we want the hand image to be.
+		int new_y = this.y;
+		if (this.fixed) {
+			new_y = this.fixed_y;
+		}
+		parent.translate(this.x, new_y); // Move the center of the new coordinate system to the place where we want the hand image to be.
 		parent.rotate(PApplet.radians(90)); // Rotate the new coordinate system by 90 degrees.
 		parent.imageMode(PConstants.CENTER);
-//		parent.image(current_hand_img, this.x+10, this.fixed_y);
 		parent.image(current_hand_img, 0, 0);
 		parent.popMatrix(); // When we pop the matrix, the hand image is rotated and in the correct position.
 	}
@@ -171,10 +177,10 @@ public class Hand implements PConstants {
 		if (pressed == false) {
 			this.destroy();
 		} else if (this.contains(mx, my)) {
-			if (this.fixed == true) {
-				this.bind(mx, this.fixed_y);
-			} else {
+			if (!this.fixed) {
 				this.bind(mx, my);
+			} else {
+				this.bind(mx, this.fixed_y);
 			}
 		}
 	}
