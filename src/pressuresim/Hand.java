@@ -30,7 +30,7 @@ public class Hand implements PConstants {
 	MouseJoint mj;
 
 	int x;
-	int fixed_x;
+	int fixed_y;
 	int y;
 	int w;
 	int h;
@@ -42,7 +42,7 @@ public class Hand implements PConstants {
 		this.parent = p;
 		this.box2d = b2;
 		this.x = _x;
-		this.fixed_x = this.x;
+		this.fixed_y = this.y;
 		this.y = _y;
 		this.fixed = _fixed;
 		this.rData = rData;
@@ -83,10 +83,9 @@ public class Hand implements PConstants {
 		fd.density = 0.3f; 
 		fd.friction = 0.01f;
 		fd.restitution = 0.9f;
-		fd.filter.categoryBits = Main.HAND_BITS;
-		fd.filter.maskBits = Main.ANCHOR_BITS;
+//		fd.filter.categoryBits = Main.HAND_BITS;
+//		fd.filter.maskBits = Main.ANCHOR_BITS;
 		//fd.setSensor(true);
-		
 
 		this.body.createFixture(fd);
 		this.body.resetMassData();
@@ -96,7 +95,8 @@ public class Hand implements PConstants {
 		if (mj != null) {
 			
 			if(!rData.isHapkitMode()){
-				this.mousePosUpdate(this.fixed_x, parent.mouseY);
+				this.mousePosUpdate(parent.mouseX, parent.mouseY);
+//				this.mousePosUpdate(parent.mouseX, this.fixed_y);
 			}
 			
 			// We can get the two anchor points
@@ -110,7 +110,7 @@ public class Hand implements PConstants {
 			// And just draw a line
 			parent.stroke(0);
 			parent.strokeWeight(1);
-			//parent.line(v1.x,v1.y,v2.x,v2.y);
+			parent.line(v1.x,v1.y,v2.x,v2.y);
 		}
 		
 		//parent.image(hand_img, this.x, this.y);
@@ -119,9 +119,12 @@ public class Hand implements PConstants {
 		this.y = (int)pos.y;
 		
 		parent.pushMatrix();
+		parent.translate(this.x, this.y); // Move the center of the new coordinate system to the place where we want the hand image to be.
+		parent.rotate(PApplet.radians(90)); // Rotate the new coordinate system by 90 degrees.
 		parent.imageMode(PConstants.CENTER);
-		parent.image(current_hand_img, this.fixed_x, this.y+10);
-		parent.popMatrix();
+//		parent.image(current_hand_img, this.x+10, this.fixed_y);
+		parent.image(current_hand_img, 0, 0);
+		parent.popMatrix(); // When we pop the matrix, the hand image is rotated and in the correct position.
 	}
 
 	public int getX() {
@@ -169,30 +172,30 @@ public class Hand implements PConstants {
 			this.destroy();
 		} else if (this.contains(mx, my)) {
 			if (this.fixed == true) {
-				this.bind(this.fixed_x, my);
+				this.bind(mx, this.fixed_y);
 			} else {
 				this.bind(mx, my);
 			}
 		}
 	}
 	
-	public void hapkitUpdate(int my){
+	public void hapkitUpdate(int pos){
 		if(this.mj !=null){
-			Vec2 mp = this.box2d.coordPixelsToWorld(this.fixed_x, my);
+			Vec2 mp = this.box2d.coordPixelsToWorld(pos, this.fixed_y);
 			this.mj.setTarget(mp);
 		}else{
-			this.bind(this.fixed_x, my);
+			this.bind(pos, this.fixed_y);
 		}
 	}
 	
-	public void hapkitUpdate(int my, int originalLen) {
+	public void hapkitUpdate(int mx, int originalLen) {
 		// Currently this method is never called.
 		if(this.mj !=null){
 			//System.out.println(originalLen+my);
-			Vec2 mp = this.box2d.coordPixelsToWorld(this.fixed_x, originalLen+my);
+			Vec2 mp = this.box2d.coordPixelsToWorld(originalLen+mx, this.fixed_y);
 			this.mj.setTarget(mp);
 		}else{
-			this.bind(this.fixed_x, originalLen+my);
+			this.bind(originalLen+mx, this.fixed_y);
 		}
 		
 	}

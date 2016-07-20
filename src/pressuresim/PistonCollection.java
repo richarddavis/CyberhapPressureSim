@@ -9,84 +9,74 @@ import shiffman.box2d.Box2DProcessing;
 
 public class PistonCollection {
 	
-	ArrayList<SpringInterface> springs;
-	SpringInterface activeSpring; 
+	ArrayList<Piston> pistons;
+	Piston activePiston; 
 	ResearchData rData;
 	Hapkit hapkit;
 	
 	public PistonCollection(ResearchData rData, Hapkit _hapkit){
-		this.springs = new ArrayList<SpringInterface>();
+		this.pistons = new ArrayList<Piston>();
 		this.rData = rData;
 		this.hapkit = _hapkit;
 	}
 	
-	public boolean add(SpringInterface s){
-		return springs.add(s);
+	public boolean add(Piston p){
+		return pistons.add(p);
 	}
 	
 	public float getActiveForce() {
-		return this.activeSpring.getForce();
+		return this.activePiston.getForce();
 	}
 	
 	public void displayForces(boolean display_on) {
-		for (SpringInterface s : springs) {
-			s.displayForce(display_on);
+		for (Piston p : pistons) {
+			p.displayForce(display_on);
 		}
 	}
 	
 	public void displayStiffness(boolean b) {
-		for (SpringInterface s : springs) {
-			s.displayK(b);
+		for (Piston p : pistons) {
+			p.displayK(b);
 		}
 	}
 	
 	public void draw() {
-		for (SpringInterface s : springs) {
-			if(s != null){
-				s.draw();
+		for (Piston p : pistons) {
+			if(p != null){
+				p.draw();
 			}
 		}
 	}
 	
-	public void spaceSpringsProportionately(int w){
-		for(int i=0;i<springs.size();i++){
-			if(springs.get(i) !=null){
-				int interval_width = (w/springs.size());
-				int x = (interval_width*i)+(interval_width/2);
-				springs.get(i).setX(x);
-			}
-		}
-	}
-	
-	public void setActive(SpringInterface s){
-		if(activeSpring == null){
-			activeSpring = s;
-			activeSpring.getHand().swapIcon();
+	public void setActive(Piston p){
+		if(activePiston == null){
+			activePiston = p;
+			activePiston.getHand().swapIcon();
 		}else{
-			activeSpring.getHand().swapIcon();
-			s.hand.swapIcon();
-			activeSpring = s;
+			activePiston.getHand().swapIcon();
+			p.hand.swapIcon();
+			activePiston = p;
 		}
 		if(rData.getInputMode() == ResearchData.HAPKIT_MODE){
 			System.out.println("Setting Hapkit k-constant to:");
-			System.out.println(s.getK());
-			this.hapkit.setKConstant(s.getK());
+			System.out.println(p.getK());
+			this.hapkit.setKConstant(p.getK());
 			// MAKES ALL OTHER SPRING ACT NORMALLY AGAIN:
 			destroyOldHapkitJoints();
 		}
 	}
 	
-	public void updateActiveSpring(int mx, int my, boolean pressed, Hapkit hapkit) {
-		for (SpringInterface s : springs) {
-			if (s!= null && s.getHand().contains(mx, my)) {
-				this.setActive(s);
-				rData.logEvent(s.getK(), -1, "SWITCHING BETWEEN SPRINGS");
+	public void updateActivePiston(int mx, int my, boolean pressed, Hapkit hapkit) {
+		for (Piston p : pistons) {
+			if (p != null && p.getHand().contains(mx, my)) {
+				this.setActive(p);
+				rData.logEvent(p.getK(), -1, "SWITCHING BETWEEN PISTONS");
 				break;
 			}
 		}
 		
 		if(rData.getInputMode() == ResearchData.MOUSE_MODE){
-			this.activeSpring.mouseUpdate(mx, my, pressed);
+			this.activePiston.mouseUpdate(mx, my, pressed);
 		}else{
 			// Why was the following line included?
 			//this.activeSpring.hapkitUpdate(my);
@@ -94,27 +84,27 @@ public class PistonCollection {
 	}
 	
 	private void destroyOldHapkitJoints() {
-		for (SpringInterface s : springs) {
-			if(s != null && !s.equals(activeSpring)){
-				s.hand.destroy();
+		for (Piston p : pistons) {
+			if(p != null && !p.equals(activePiston)){
+				p.hand.destroy();
 			}
 		}
 	}
 
-	public void updateActiveSpringYPosition(double hapkitPos) {
-		int currentY = (int) this.activeSpring.getY()+this.activeSpring.originalLen+10;
-		int newY = (int) (currentY + hapkitPos);
+	public void updateActivePistonPosition(double hapkitPos) {
+		int currentPos = (int) this.activePiston.getX()+this.activePiston.originalLen+10;
+		int newPos = (int) (currentPos + hapkitPos);
 		//System.out.println(hapkitPos);
-		this.activeSpring.hapkitUpdate(newY);	
+		this.activePiston.hapkitUpdate(newPos);	
 	}
 
 	public void delete(int value) {
-		springs.remove(value);
-		springs.add(value, null);
+		pistons.remove(value);
+		pistons.add(value, null);
 	}
 
-	public void add(int x_i, SpringInterface s) {
-		springs.add(x_i, s);
+	public void add(int x_i, Piston p) {
+		pistons.add(x_i, p);
 	}
 
 }

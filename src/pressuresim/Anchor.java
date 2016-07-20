@@ -40,7 +40,6 @@ public class Anchor {
 		
 		hook_img = p.loadImage("hook.png");
 		
-		
 	    bd.position.set(box2d.coordPixelsToWorld(new Vec2((int) this.x,(int) this.y)));
 	    bd.type = BodyType.STATIC;
 	    bd.fixedRotation = true;
@@ -61,8 +60,8 @@ public class Anchor {
 	    fd.density = 1f;
 	    fd.friction = 0.3f;
 	    fd.restitution = 0.1f;
-	    fd.filter.categoryBits = Main.ANCHOR_BITS;
-	    fd.filter.maskBits = Main.HAND_BITS;
+//	    fd.filter.categoryBits = Main.ANCHOR_BITS;
+//	    fd.filter.maskBits = Main.HAND_BITS;
 	    
 	    this.body.createFixture(fd);
 	}

@@ -12,8 +12,8 @@ import processing.serial.Serial;
 
 public class Main extends PApplet {
 	
-	static int HAND_BITS = 1;
-	static int ANCHOR_BITS = 2;
+//	static int HAND_BITS = 1;
+//	static int ANCHOR_BITS = 2;
 	static int MOUSE_MODE = 0;
 	static int HAPKIT_MODE = 1;
 	static int SCALE_FACTOR = 60;
@@ -106,24 +106,26 @@ public class Main extends PApplet {
 		//frame.setResizable(false);
 		background(255);
 		
-		String pID = JOptionPane.showInputDialog(null,
-				  "Enter Participant ID",
-				  "Participant ID",
-				  JOptionPane.QUESTION_MESSAGE);
+//		String pID = JOptionPane.showInputDialog(null,
+//				  "Enter Participant ID",
+//				  "Participant ID",
+//				  JOptionPane.QUESTION_MESSAGE);
+//		
+//		String[] choices = { "Hapkit Condition", "Mouse Condition"};
+//	    String input = (String) JOptionPane.showInputDialog(null, "Select a Condition",
+//	        "Study 2 Condition", JOptionPane.QUESTION_MESSAGE, null,
+//	        choices, choices[0]);
+//	    
+//	    if(input.equals("Hapkit Condition")){
+//	    	inputMode = HAPKIT_MODE;
+//	    }else{
+//	    	inputMode = MOUSE_MODE;
+//	    }
+//		
+//		participantId = Integer.parseInt(pID);
 		
-		String[] choices = { "Hapkit Condition", "Mouse Condition"};
-	    String input = (String) JOptionPane.showInputDialog(null, "Select a Condition",
-	        "Study 2 Condition", JOptionPane.QUESTION_MESSAGE, null,
-	        choices, choices[0]);
-	    
-	    if(input.equals("Hapkit Condition")){
-	    	inputMode = HAPKIT_MODE;
-	    }else{
-	    	inputMode = MOUSE_MODE;
-	    }
-		
-		participantId = Integer.parseInt(pID);
-		
+		participantId = 0;
+		inputMode = MOUSE_MODE;
 		researchData = new ResearchData(participantId, inputMode);
 		
 		cp5 = new ControlP5(this);

@@ -20,111 +20,104 @@ public class Canvas extends Component {
 	double hapkitPos;
 	
 	Hand hand;
-	Boundary ceiling;
-	Boundary floor;
-	Weight weight;
+//	Boundary ceiling;
+//	Boundary floor;
 	
 	PImage wood_plank_img;
 	PImage next_img;
 	
-	PImage spring_x;
-	PImage spring_y;
-	PImage spring_x_active;
-	PImage spring_y_active;
+//	PImage piston_x;
+//	PImage piston_y;
+//	PImage piston_x_active;
+//	PImage piston_y_active;
 	
 	Button next, X, Y;
 	
-	int springx_img_x;
-	int springx_img_y;
+//	int pistonx_img_x;
+//	int pistonx_img_y;
+//	
+//	int pistony_img_x;
+//	int pistony_img_y;	
 	
-	int springy_img_x;
-	int springy_img_y;	
+	int piston_img_w;
+	int piston_img_h;
 	
-	int spring_img_w;
-	int spring_img_h;
-	
-	int numSprings;
+	int numPistons;
 	private Ruler ruler;
 	ResearchData rData;
 	
-	SpringInterface s1, s2, s3, s4;
+	Piston p1, p2, p3;
 	
-	SpringCollection sc;
-	WeightCollection wc;
+	PistonCollection pc;
 	Button delete1;
     Button delete2;
 	Button delete3;
 
-	static int X1, X2, X3, Y_ALL;
+	static int Y1, Y2, Y3, X_ALL;
 	
 	public Canvas(Main main, ControlP5 cp5, int _x, int _y, int _w, int _h, Hapkit _hapkit, ResearchData rData) {
 		
 		super(_x,_y,_w,_h);
 		
-		X1 = x+100;
-		X2 = x+250;
-		X3 = x+380;
-		Y_ALL = this.y+100;
+		Y1 = y+100;
+		Y2 = y+250;
+		Y3 = y+380;
+		X_ALL = this.x+100;
 		
 		this.hapkit = _hapkit;
-		this.numSprings = 3;
+		this.numPistons = 3;
 		this.rData = rData;
 		
-		spring_img_w = 100;
-		spring_img_h = 100;
+		piston_img_w = 231;
+		piston_img_h = 80;
 		
-		springx_img_x = this.x+(this.w/4)-(spring_img_w/2);
-		springx_img_y = this.y+150;
-		
-		springy_img_x = this.x+(3*(this.w/4))-(spring_img_w/2);
-		springy_img_y = this.y+150;	
+//		pistonx_img_x = this.x+(this.w/4)-(piston_img_w/2);
+//		pistonx_img_y = this.y+150;
+//		
+//		pistony_img_x = this.x+(3*(this.w/4))-(piston_img_w/2);
+//		pistony_img_y = this.y+150;	
 		
 		parent = main; 
 		
 		wood_plank_img = parent.loadImage("wood-plank.jpg");
 		next_img = parent.loadImage("arrow-next.png");
-		spring_x = parent.loadImage("springx.jpg");
-		spring_y = parent.loadImage("springy.jpg");
-		spring_x_active = parent.loadImage("springx-active.jpg");
-		spring_y_active = parent.loadImage("springy-active.jpg");
+//		piston_x = parent.loadImage("pistonx.jpg");
+//		piston_y = parent.loadImage("pistony.jpg");
+//		piston_x_active = parent.loadImage("pistonx-active.jpg");
+//		piston_y_active = parent.loadImage("pistony-active.jpg");
 		
 		box2d = new Box2DProcessing(parent);
 		box2d.createWorld();
 		box2d.setScaleFactor(400); // 500 pixels is 1 meter
-		box2d.setGravity(0, -2);
+		box2d.setGravity(0, 0);
 		
 		// This prevents dynamic bodies from sticking to static ones
 		org.jbox2d.common.Settings.velocityThreshold = 0.2f;
 		
-		//s1 = new SerialSpring(this.x+50, this.y+100, 30, 200, "Spring A", this.parent, box2d, rData);
-		//s2 = new ParallelSpring(this.x+300, this.y+100, 30, 200, "Spring B",this.parent, box2d, rData);
-		s3 = new Spring(X3, this.y+100, 15, 200, "Spring C",this.parent, box2d,rData);
-		s2 = new ParallelSpring(X2, this.y+100, 55, 35, 200, "Spring B",this.parent, box2d,rData);
-		s1 = new Spring(X1, this.y+100, 35, 200, "Spring A",this.parent, box2d,rData);
-		//s4 = new ComboSpring(this.x+150, this.y+100, 30, 100, this.parent, box2d, rData);
+		p1 = new Piston(this.x+100, Y1, 15, 300, "Piston A", this.parent, box2d, rData);
+		p2 = new Piston(this.x+100, Y2, 35, 300, "Piston B", this.parent, box2d, rData);
+		p3 = new Piston(this.x+100, Y3, 55, 300, "Piston C", this.parent, box2d, rData);
 		
-		sc = new SpringCollection(rData, hapkit);
-		sc.add(s1);
-		sc.add(s2);
-		sc.add(s3);
-		sc.setActive(s1);
+		pc = new PistonCollection(rData, hapkit);
+		pc.add(p1);
+		pc.add(p2);
+		pc.add(p3);
+		pc.setActive(p1);
 		
 		if(rData.isHapkitMode()){
 			rData.logEvent(-1, -1, "Initial K value sent to hapkit");
-			//hapkit.setKConstant(sc.activeSpring.getK());
+			//hapkit.setKConstant(sc.activePiston.getK());
 		}
 		
-		floor = new Boundary(this.x + this.w/2, this.h - 20, this.w - 20, 20, parent, box2d);
-		ceiling = new Boundary(this.x+10, this.y+30, this.w - 20, 30, parent, box2d);
+//		floor = new Boundary(this.x + this.w/2, this.h - 20, this.w - 20, 20, parent, box2d);
+//		ceiling = new Boundary(this.x+10, this.y+30, this.w - 20, 30, parent, box2d);
 		
 		// Get ruler spacing from Box2d world.
+		// Spacing is determined by the ruler height in pixels (300) divided by the spacing in pixels.
 		Vec2 spacing1 = box2d.coordWorldToPixels(new Vec2(0, 0));
 		Vec2 spacing2 = box2d.coordWorldToPixels(new Vec2(0, 1));
 		float one_meter = spacing2.sub(spacing1).length();
 		int spacing = (int) (one_meter/10);
-		// Spacing is all jacked up. As scale gets bigger, spacing gets smaller; this is backwards.
-		// Spacing is determined by the ruler height in pixels (300) divided by the spacing in pixels.
-
 		ruler = new Ruler(parent, cp5, this.x+20, this.y+100, 40, (int) one_meter, spacing);
 		
 		delete1 = cp5.addButton("Delete1")
@@ -157,7 +150,7 @@ public class Canvas extends Component {
 		
 		// Why is this here?
 		if(rData.isHapkitMode()){
-		  updateSpringPosition();
+		  updatePistonPosition();
 		  readHapkitPos();
 		}
 	}
@@ -175,13 +168,13 @@ public class Canvas extends Component {
 		parent.image(wood_plank_img, this.x+10, this.y+50, this.w-20, 30);
 		parent.popMatrix();
 		
-		sc.draw();
-		floor.draw();
-		ruler.draw();
+		pc.draw();
+//		floor.draw();
+//		ruler.draw();
 	}
 	
-	private void updateSpringPosition() {
-		sc.updateActiveSpringYPosition(hapkitPos);
+	private void updatePistonPosition() {
+		pc.updateActivePistonPosition(hapkitPos);
 	}
 	
 	public void readHapkitPos() {
@@ -189,35 +182,35 @@ public class Canvas extends Component {
 	}
 	
 	public void displayForces(boolean on) {
-		this.sc.displayForces(on);
+		this.pc.displayForces(on);
 	}
 	
 	public void mousePressed() {
-		sc.updateActiveSpring(parent.mouseX, parent.mouseY, true, hapkit);
+		pc.updateActivePiston(parent.mouseX, parent.mouseY, true, hapkit);
 	}
 	
 	public void mouseReleased() {
-		sc.updateActiveSpring(parent.mouseX, parent.mouseY, false, hapkit);
+		pc.updateActivePiston(parent.mouseX, parent.mouseY, false, hapkit);
 	}
 	
-	public SpringCollection getSpringCollection() {
-		return this.sc;
+	public PistonCollection getPistonCollection() {
+		return this.pc;
 	}
 
 	@Override
 	public void controlEvent(ControlEvent event) {
 		System.out.println(event.getValue());
 		if(event.isFrom(delete1)){
-			sc.delete((int)event.getValue());
+			pc.delete((int)event.getValue());
 		}else if(event.isFrom(delete2)){
-			sc.delete((int)event.getValue());
+			pc.delete((int)event.getValue());
 		}else if(event.isFrom(delete3)){
-			sc.delete((int)event.getValue());
+			pc.delete((int)event.getValue());
 		}
 	}
 
 	public void displayStiffness(boolean b) {
-		this.sc.displayStiffness(b);
+		this.pc.displayStiffness(b);
 	}
 
 }

@@ -42,8 +42,8 @@ public class PhysicsPlayground extends Component{
 		
 		tf2.getCaptionLabel().setVisible(false);
 		
-		tf2.setText(c.sc.activeSpring.getLabel());
-		tf1.setText(Integer.toString(c.sc.activeSpring.originalLen/Main.SCALE_FACTOR));
+		tf2.setText(c.pc.activePiston.getLabel());
+		tf1.setText(Integer.toString(c.pc.activePiston.originalLen/Main.SCALE_FACTOR));
 		
 		cp5.addListener(this);
 	}
@@ -52,11 +52,11 @@ public class PhysicsPlayground extends Component{
 	public void step() {
 		// TODO Auto-generated method stub
 		if(!tf2.isActive()){
-			tf2.setText(c.sc.activeSpring.getLabel());
+			tf2.setText(c.pc.activePiston.getLabel());
 		}
 		
 		if(!tf1.isActive()){
-			tf1.setText(Integer.toString(c.sc.activeSpring.originalLen/Main.SCALE_FACTOR));
+			tf1.setText(Integer.toString(c.pc.activePiston.originalLen/Main.SCALE_FACTOR));
 		}
 	}
 
@@ -66,7 +66,7 @@ public class PhysicsPlayground extends Component{
 		parent.fill(255);
 		parent.rect(x, y, w, h);
 		parent.fill(0);
-		parent.text("Spring Properties", x+10, y+25);
+		parent.text("Piston Properties", x+10, y+25);
 		
 		parent.pushMatrix();
 		Font p1 = parent.getFont();
@@ -83,11 +83,11 @@ public class PhysicsPlayground extends Component{
 	public void controlEvent(ControlEvent event) {
 		if(event.isFrom(tf1)){
 			int len = Integer.parseInt(tf1.getStringValue())*Main.SCALE_FACTOR;
-			c.sc.activeSpring.originalLen = len;
-			c.sc.activeSpring.setLength(len);
-			System.out.println(c.sc.activeSpring.originalLen);
+			c.pc.activePiston.originalLen = len;
+			c.pc.activePiston.setLength(len);
+			System.out.println(c.pc.activePiston.originalLen);
 		}else if(event.isFrom(tf2)){
-			c.sc.activeSpring.setLabel(tf2.getStringValue());
+			c.pc.activePiston.setLabel(tf2.getStringValue());
 		}
 	}
 
