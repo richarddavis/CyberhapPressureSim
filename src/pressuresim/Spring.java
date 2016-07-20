@@ -132,7 +132,7 @@ public class Spring extends SpringInterface {
 		Vec2 v2 = new Vec2(0,0);
 		dj.getAnchorB(v2);
 
-		// Convert them to screen coordinates
+		// Convert them to screen coordinates.
 		//v1 = box2d.coordWorldToPixels(v1);
 		//v2 = box2d.coordWorldToPixels(v2);
 		
