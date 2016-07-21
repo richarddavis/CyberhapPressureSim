@@ -39,7 +39,7 @@ public class Piston {
 	PImage container_img;
 
 	public Piston(int _x, int _y, int _k, int _length, String label, PApplet p, Box2DProcessing box2d,
-			ResearchData rData) {
+			ResearchData rData, String image_name) {
 
 		this.x = _x;
 		this.y = _y;
@@ -57,7 +57,7 @@ public class Piston {
 
 		// Import photo
 		this.piston_img = parent.loadImage("piston.png");
-		this.container_img = parent.loadImage("container.png");
+		this.container_img = parent.loadImage(image_name);
 
 		// Define the joint
 		this.djd = new DistanceJointDef();
@@ -115,8 +115,6 @@ public class Piston {
 			// v2.y-v1.y-(hand.current_hand_img.height/2)
 
 			// Hand-tweaked coordinates
-			
-			System.out.println(this.hand.y);
 			int dfx = this.hand.x - this.hand.w / 2 - 10;
 			int dfy = this.hand.y + this.hand.h + 5;
 
@@ -170,7 +168,7 @@ public class Piston {
 	}
 
 	public float getForce() {
-		return (this.k * (this.getLength() - dj.getLength()));
+		return (this.k * (dj.getLength() - this.getLength()));
 	}
 
 	public void setX(int x) {

@@ -35,6 +35,9 @@ public class Hand implements PConstants {
 	int w;
 	int h;
 	boolean fixed;
+	
+	int left_limit = 95;
+	int right_limit = 300;
 
 	public Hand(int _x, int _y, boolean _fixed, PApplet p, Box2DProcessing b2, ResearchData rData) {
 
@@ -208,8 +211,10 @@ public class Hand implements PConstants {
 	
 	public void mousePosUpdate(int mx, int my) {
 		// Update the position
-		Vec2 mouseWorld = box2d.coordPixelsToWorld(mx,my);
-		this.mj.setTarget(mouseWorld);
+		if (mx >= left_limit && mx <= right_limit) {
+			Vec2 mouseWorld = box2d.coordPixelsToWorld(mx,my);
+			this.mj.setTarget(mouseWorld);
+		}
 	}
 
 	public void destroy() {

@@ -96,9 +96,9 @@ public class Canvas extends Component {
 		// This prevents dynamic bodies from sticking to static ones
 		org.jbox2d.common.Settings.velocityThreshold = 0.2f;
 		
-		p1 = new Piston(this.x+100, Y1, 15, 300, "Piston A", this.parent, box2d, rData);
-		p2 = new Piston(this.x+100, Y2, 35, 300, "Piston B", this.parent, box2d, rData);
-		p3 = new Piston(this.x+100, Y3, 55, 300, "Piston C", this.parent, box2d, rData);
+		p1 = new Piston(this.x+100, Y1, 15, 300, "Piston A", this.parent, box2d, rData, "container_red.png");
+		p2 = new Piston(this.x+100, Y2, 35, 300, "Piston B", this.parent, box2d, rData, "container_blue.png");
+		p3 = new Piston(this.x+100, Y3, 55, 300, "Piston C", this.parent, box2d, rData, "container_yellow.png");
 		
 		pc = new PistonCollection(rData, hapkit);
 		pc.add(p1);
