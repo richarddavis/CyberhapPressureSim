@@ -9,7 +9,7 @@ import controlP5.RadioButton;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class ForceDisplaySettings extends Component {
+public class PressureDisplaySettings extends Component {
 
 	Canvas c;
 	PApplet p;
@@ -18,7 +18,7 @@ public class ForceDisplaySettings extends Component {
 	PImage numerical_img, stiff_img;
 	
 	
-	public ForceDisplaySettings(Main main, ControlP5 cp5, int _x, int _y, int _w, int _h, Canvas _c) {
+	public PressureDisplaySettings(Main main, ControlP5 cp5, int _x, int _y, int _w, int _h, Canvas _c) {
 		super(_x,_y,_w,_h);
 		this.c = _c;
 		this.p = main;
@@ -34,7 +34,7 @@ public class ForceDisplaySettings extends Component {
 		        .setColorLabel(this.p.color(0))
                 .setItemsPerRow(1)
                 .setSpacingRow(20)
-                .addItem("Applied Force", 0)
+                .addItem("Pressure", 0)
                 .addItem("Displacement", 1)
                 .addItem("Equilibrium Position", 2)
                 ;
@@ -110,9 +110,9 @@ public class ForceDisplaySettings extends Component {
 			this.c.displayStiffness(true);
 		}
 		if (values[2] == 1) {
-			System.out.println("Equilibrium position box checked.");
+			this.c.displayEquilibriumPosition(false);
 		} else {
-			System.out.println("Equilibrium position box unchecked.");
+			this.c.displayEquilibriumPosition(true);
 		}
 	}
 	

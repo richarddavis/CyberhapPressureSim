@@ -42,9 +42,9 @@ public class Ruler implements MouseListener, MouseMotionListener {
 		int spacing = distance;
 		
 		for(int i=0; i<=10; i++){
-			p.line(this.x+(this.w/2), this.y+10+(i*spacing), this.x+this.w, this.y+10+(i*spacing));
+			p.line(this.x+10+(i*spacing), this.y + this.h/2, this.x+10+(i*spacing), this.y);
 			p.fill(50);
-			p.text(i, this.x+1, this.y+15+(i*spacing));
+			p.text(i, this.x+15+(i*spacing), this.y+15);
 		}
 		
 	}

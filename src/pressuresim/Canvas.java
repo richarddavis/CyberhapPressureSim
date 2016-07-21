@@ -50,6 +50,7 @@ public class Canvas extends Component {
 	PistonCollection pc;
 	
 	PImage dotted_line_img;
+	boolean draw_dotted_line;
 	
 //	Button delete1;
 //    Button delete2;
@@ -106,6 +107,7 @@ public class Canvas extends Component {
 		pc.add(p3);
 		pc.setActive(p1);
 		
+		this.draw_dotted_line = true;
 		this.dotted_line_img = parent.loadImage("dotted_line.png");
 		
 		if(rData.isHapkitMode()){
@@ -122,7 +124,7 @@ public class Canvas extends Component {
 		Vec2 spacing2 = box2d.coordWorldToPixels(new Vec2(0, 1));
 		float one_meter = spacing2.sub(spacing1).length();
 		int spacing = (int) (one_meter/10);
-		ruler = new Ruler(parent, cp5, this.x+20, this.y+100, 40, (int) one_meter, spacing);
+		ruler = new Ruler(parent, cp5, this.x+165, this.y+440, (int) one_meter + 50, 30, spacing);
 		
 //		delete1 = cp5.addButton("Delete1")
 //			     .setValue(0)
@@ -174,12 +176,15 @@ public class Canvas extends Component {
 		
 		pc.draw();
 //		floor.draw();
-//		ruler.draw();
 		
 		// Draw neutral line
 		parent.imageMode(PConstants.CENTER);
 		// Hand-tweaked coordinates that put the neutral line at the exact right place (ugly)
-		parent.image(dotted_line_img, this.x + p1.originalLen + 23, Y2-10);
+		if (this.draw_dotted_line) {
+			parent.image(dotted_line_img, this.x + p1.originalLen + 23, Y2-10);
+		}
+		
+		ruler.draw();
 		
 //		parent.fill(255);
 //		parent.stroke(0);
@@ -225,6 +230,14 @@ public class Canvas extends Component {
 
 	public void displayStiffness(boolean b) {
 		this.pc.displayStiffness(b);
+	}
+	
+	public void displayEquilibriumPosition(boolean b) {
+		if (b) {
+			this.draw_dotted_line = true;
+		} else {
+			this.draw_dotted_line = false;
+		}
 	}
 
 }

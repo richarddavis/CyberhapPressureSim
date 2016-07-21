@@ -129,7 +129,8 @@ public class Piston {
 				parent.fill(120);
 				parent.pushMatrix();
 				parent.textFont(p2);
-				parent.text("K: " + k, dfx + 20, dfy + 20);
+				float d = this.getDisplacement();
+				parent.text("X: " + String.format("%.2f", d), dfx + 20, dfy + 20);
 				parent.setFont(p1);
 				parent.textSize(18);
 				parent.popMatrix();
@@ -139,7 +140,7 @@ public class Piston {
 				parent.fill(100);
 				parent.pushMatrix();
 				parent.textFont(p2);
-				parent.text("Force: " + String.format("%.2f", this.getForce()), dfx, dfy);
+				parent.text("Pressure: " + String.format("%.2f", this.getForce()), dfx, dfy);
 				parent.setFont(p1);
 				parent.textSize(18);
 				parent.popMatrix();
@@ -161,6 +162,15 @@ public class Piston {
 		// v2 = box2d.coordWorldToPixels(v2);
 
 		return (v2.sub(v1)).length();
+	}
+	
+	public float getDisplacement() {
+		Vec2 v1 = new Vec2(0, 0);
+		dj.getAnchorA(v1);
+		Vec2 v2 = new Vec2(0, 0);
+		dj.getAnchorB(v2);
+		float newLength = (v2.sub(v1)).length();
+		return djd.length - newLength;
 	}
 
 	public void setLength(int len_pixels) {
