@@ -81,7 +81,7 @@ public class Piston {
 	// TODO: update hand drawing as well.
 	public void draw() {
 		parent.fill(0);
-		parent.text(this.label, this.x - 40, 40);
+		parent.text(this.label, this.x + this.originalLen + 80, this.y-50);
 		if (dj != null) {
 			// We can get the two anchor points
 			Vec2 v1 = new Vec2(0, 0);
@@ -114,13 +114,15 @@ public class Piston {
 			// (float) (this.y + (0.5*(v2.y-v1.y)))
 			// v2.y-v1.y-(hand.current_hand_img.height/2)
 
-			// System.out.println(this.getLength());
-			// System.out.println(this.getForce());
-			int dfx = this.x - this.hand.w / 2 - 10;
+			// Hand-tweaked coordinates
+			
+			System.out.println(this.hand.y);
+			int dfx = this.hand.x - this.hand.w / 2 - 10;
 			int dfy = this.hand.y + this.hand.h + 5;
 
-			int dsx1 = this.x;
-			int dsy1 = (this.anchor.y + this.hand.y) / 2;
+			// Hand-tweaked coordinates
+			int dsx1 = this.anchor.x + 90;
+			int dsy1 = this.hand.y + 60;
 
 			Font p1 = parent.getFont();
 			PFont p2 = parent.createFont("Verdana", 12);
@@ -129,7 +131,7 @@ public class Piston {
 				parent.fill(120);
 				parent.pushMatrix();
 				parent.textFont(p2);
-				parent.text("K: " + k, dsx1 + 20, dsy1);
+				parent.text("K: " + k, dfx + 20, dfy + 20);
 				parent.setFont(p1);
 				parent.textSize(18);
 				parent.popMatrix();

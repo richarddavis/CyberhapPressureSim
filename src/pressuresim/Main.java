@@ -86,8 +86,8 @@ public class Main extends PApplet {
 	//Components
 	Hapkit hapkit;
 	Canvas designCanvas;
-//	PhysicsPlayground physicsPlayground;
 	ForceDisplaySettings forceFeedbackOption;
+//	PhysicsPlayground physicsPlayground;
 //	HapkitFeedbackSettings hapkitFeedbackPanel;
 	//ExperimentSettings expSettings;
 //	SpringFactory springFactory;
