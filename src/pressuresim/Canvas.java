@@ -23,8 +23,8 @@ public class Canvas extends Component {
 //	Boundary ceiling;
 //	Boundary floor;
 	
-	PImage wood_plank_img;
-	PImage next_img;
+//	PImage wood_plank_img;
+//	PImage next_img;
 	
 //	PImage piston_x;
 //	PImage piston_y;
@@ -39,19 +39,21 @@ public class Canvas extends Component {
 //	int pistony_img_x;
 //	int pistony_img_y;	
 	
-	int piston_img_w;
-	int piston_img_h;
+//	int piston_img_w;
+//	int piston_img_h;
 	
 	int numPistons;
 	private Ruler ruler;
 	ResearchData rData;
 	
 	Piston p1, p2, p3;
-	
 	PistonCollection pc;
-	Button delete1;
-    Button delete2;
-	Button delete3;
+	
+	PImage dotted_line_img;
+	
+//	Button delete1;
+//    Button delete2;
+//	Button delete3;
 
 	static int Y1, Y2, Y3, X_ALL;
 	
@@ -68,8 +70,8 @@ public class Canvas extends Component {
 		this.numPistons = 3;
 		this.rData = rData;
 		
-		piston_img_w = 231;
-		piston_img_h = 80;
+//		piston_img_w = 231;
+//		piston_img_h = 80;
 		
 //		pistonx_img_x = this.x+(this.w/4)-(piston_img_w/2);
 //		pistonx_img_y = this.y+150;
@@ -79,8 +81,8 @@ public class Canvas extends Component {
 		
 		parent = main; 
 		
-		wood_plank_img = parent.loadImage("wood-plank.jpg");
-		next_img = parent.loadImage("arrow-next.png");
+//		wood_plank_img = parent.loadImage("wood-plank.jpg");
+//		next_img = parent.loadImage("arrow-next.png");
 //		piston_x = parent.loadImage("pistonx.jpg");
 //		piston_y = parent.loadImage("pistony.jpg");
 //		piston_x_active = parent.loadImage("pistonx-active.jpg");
@@ -104,6 +106,8 @@ public class Canvas extends Component {
 		pc.add(p3);
 		pc.setActive(p1);
 		
+		this.dotted_line_img = parent.loadImage("dotted_line.png");
+		
 		if(rData.isHapkitMode()){
 			rData.logEvent(-1, -1, "Initial K value sent to hapkit");
 			//hapkit.setKConstant(sc.activePiston.getK());
@@ -120,26 +124,26 @@ public class Canvas extends Component {
 		int spacing = (int) (one_meter/10);
 		ruler = new Ruler(parent, cp5, this.x+20, this.y+100, 40, (int) one_meter, spacing);
 		
-		delete1 = cp5.addButton("Delete1")
-			     .setValue(0)
-			     .setPosition(x+77,y+25)
-			     .setSize(55,20)
-			     .setCaptionLabel("Delete")
-			     .setId(1);
-		
-		delete2 = cp5.addButton("Delete2")
-			     .setValue(1)
-			     .setPosition(x+220,y+25)
-			     .setSize(55,20)
-			     .setCaptionLabel("Delete")
-			     .setId(1);
-		
-		delete3 = cp5.addButton("Delete3")
-			     .setValue(2)
-			     .setPosition(x+370,y+25)
-			     .setSize(55,20)
-			     .setCaptionLabel("Delete")
-			     .setId(1);
+//		delete1 = cp5.addButton("Delete1")
+//			     .setValue(0)
+//			     .setPosition(x+77,y+25)
+//			     .setSize(55,20)
+//			     .setCaptionLabel("Delete")
+//			     .setId(1);
+//		
+//		delete2 = cp5.addButton("Delete2")
+//			     .setValue(1)
+//			     .setPosition(x+220,y+25)
+//			     .setSize(55,20)
+//			     .setCaptionLabel("Delete")
+//			     .setId(1);
+//		
+//		delete3 = cp5.addButton("Delete3")
+//			     .setValue(2)
+//			     .setPosition(x+370,y+25)
+//			     .setSize(55,20)
+//			     .setCaptionLabel("Delete")
+//			     .setId(1);
 		
 		cp5.addListener(this);
 		
@@ -163,14 +167,24 @@ public class Canvas extends Component {
 		parent.textSize(18); 
 		parent.fill(0);
 		
-		parent.pushMatrix();
-		parent.imageMode(PConstants.CORNER);
-		parent.image(wood_plank_img, this.x+10, this.y+50, this.w-20, 30);
-		parent.popMatrix();
+//		parent.pushMatrix();
+//		parent.imageMode(PConstants.CORNER);
+//		parent.image(wood_plank_img, this.x+10, this.y+50, this.w-20, 30);
+//		parent.popMatrix();
 		
 		pc.draw();
 //		floor.draw();
 //		ruler.draw();
+		
+		// Draw neutral line
+		parent.imageMode(PConstants.CENTER);
+		// Hand-tweaked coordinates that put the neutral line at the exact right place (ugly)
+		parent.image(dotted_line_img, this.x + p1.originalLen + 23, Y2-10);
+		
+//		parent.fill(255);
+//		parent.stroke(0);
+//		parent.strokeWeight(3);	
+//		parent.line(this.x+100, Y1, this.x+100, Y3);
 	}
 	
 	private void updatePistonPosition() {
@@ -199,14 +213,14 @@ public class Canvas extends Component {
 
 	@Override
 	public void controlEvent(ControlEvent event) {
-		System.out.println(event.getValue());
-		if(event.isFrom(delete1)){
-			pc.delete((int)event.getValue());
-		}else if(event.isFrom(delete2)){
-			pc.delete((int)event.getValue());
-		}else if(event.isFrom(delete3)){
-			pc.delete((int)event.getValue());
-		}
+//		System.out.println(event.getValue());
+//		if(event.isFrom(delete1)){
+//			pc.delete((int)event.getValue());
+//		}else if(event.isFrom(delete2)){
+//			pc.delete((int)event.getValue());
+//		}else if(event.isFrom(delete3)){
+//			pc.delete((int)event.getValue());
+//		}
 	}
 
 	public void displayStiffness(boolean b) {

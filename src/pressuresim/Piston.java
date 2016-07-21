@@ -36,6 +36,7 @@ public class Piston {
 
 	Anchor anchor;
 	PImage piston_img;
+	PImage container_img;
 
 	public Piston(int _x, int _y, int _k, int _length, String label, PApplet p, Box2DProcessing box2d,
 			ResearchData rData) {
@@ -56,6 +57,7 @@ public class Piston {
 
 		// Import photo
 		this.piston_img = parent.loadImage("piston.png");
+		this.container_img = parent.loadImage("container.png");
 
 		// Define the joint
 		this.djd = new DistanceJointDef();
@@ -91,20 +93,22 @@ public class Piston {
 			v1 = box2d.coordWorldToPixels(v1);
 			v2 = box2d.coordWorldToPixels(v2);
 
-			// And draw the piston
+			// And draw the container
+			parent.imageMode(PConstants.CENTER);
+			parent.image(container_img, this.x + this.container_img.width/2 + 120, this.y);
 			// int height = (int) (v2.y - v1.y);
 			// int width = 30;
 			// piston_img.resize(width, height);
 			// parent.image(piston_img, v1.x, v1.y);
 
-			// And just draw a line
-			parent.stroke(0);
-			parent.strokeWeight(3);
-			parent.line(v1.x, v1.y, v2.x, v2.y);
+			// And just draw a line; great for debugging
+//			parent.stroke(0);
+//			parent.strokeWeight(3);
+//			parent.line(v1.x, v1.y, v2.x, v2.y);
 
 			// parent.pushMatrix();
 			parent.imageMode(PConstants.CENTER);
-			parent.image(piston_img, v2.x + this.piston_img.width/2 + this.hand.w/2, this.y, this.piston_img.width, this.piston_img.height);
+			parent.image(piston_img, v2.x + this.piston_img.width/2, this.y, this.piston_img.width, this.piston_img.height);
 			// parent.popMatrix();
 
 			// (float) (this.y + (0.5*(v2.y-v1.y)))

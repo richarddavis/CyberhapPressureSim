@@ -18,7 +18,7 @@ public class Anchor {
 	PApplet proc;
 	Box2DProcessing box2d;
 	//PImage hand_img;
-	PImage hook_img;
+//	PImage hook_img;
 	Body body;
 	
 	int x;
@@ -38,7 +38,7 @@ public class Anchor {
 		this.w = 20;
 		this.h = 20;
 		
-		hook_img = p.loadImage("hook.png");
+//		hook_img = p.loadImage("hook.png");
 		
 	    bd.position.set(box2d.coordPixelsToWorld(new Vec2((int) this.x,(int) this.y)));
 	    bd.type = BodyType.STATIC;
@@ -75,10 +75,10 @@ public class Anchor {
 		proc.stroke(0);
 		proc.strokeWeight(1);
 		
-		proc.pushMatrix();
-		proc.imageMode(PConstants.CENTER);
-		proc.image(hook_img, this.x, this.y, this.w+20, this.h+20);
-		proc.popMatrix();
+//		proc.pushMatrix();
+//		proc.imageMode(PConstants.CENTER);
+//		proc.image(hook_img, this.x, this.y, this.w+20, this.h+20);
+//		proc.popMatrix();
 	}
 	
 	public int getX() {
