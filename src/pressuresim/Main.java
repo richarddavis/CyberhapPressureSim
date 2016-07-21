@@ -86,8 +86,8 @@ public class Main extends PApplet {
 	//Components
 	Hapkit hapkit;
 	Canvas designCanvas;
-	PhysicsPlayground physicsPlayground;
-//	ForceDisplaySettings forceFeedbackOption;
+//	PhysicsPlayground physicsPlayground;
+	ForceDisplaySettings forceFeedbackOption;
 //	HapkitFeedbackSettings hapkitFeedbackPanel;
 	//ExperimentSettings expSettings;
 //	SpringFactory springFactory;
@@ -172,7 +172,8 @@ public class Main extends PApplet {
 		}
 		
 		designCanvas = new Canvas(this, cp5, canvasX, canvasY, canvasW, canvasH, hapkit, researchData);
-		physicsPlayground = new PhysicsPlayground(this, cp5, designCanvas, controlPanelX, controlPanelY, controlPanelW, controlPanelH);
+		forceFeedbackOption = new ForceDisplaySettings(this, cp5, controlPanelX, controlPanelY, controlPanelW, controlPanelH, designCanvas);
+//		physicsPlayground = new PhysicsPlayground(this, cp5, designCanvas, controlPanelX, controlPanelY, controlPanelW, controlPanelH);
 		//participantSelection = new ParticipantSelection(this, cp5, pSX, pSY, pSW, pSH, participantId);
 //		forceFeedbackOption = new ForceDisplaySettings(this, cp5, fFOX, fFOY, fFOW, fFOH,  designCanvas);
 		//expSettings = new ExperimentSettings(this, cp5, eSX, eSY, eSW, eSH);
@@ -187,8 +188,8 @@ public class Main extends PApplet {
 		components.add(designCanvas);
 		//components.add(expSettings);
 //		components.add(springFactory);
-		components.add(physicsPlayground);
-//		components.add(forceFeedbackOption);
+//		components.add(physicsPlayground);
+		components.add(forceFeedbackOption);
 	}
 
 	public void draw() {
