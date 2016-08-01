@@ -1,4 +1,4 @@
-package pressuresim;
+package pressurelab;
 
 
 import org.jbox2d.common.Vec2;

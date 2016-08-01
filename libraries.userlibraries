@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <eclipse-userlibraries version="2">
     <library name="box2d" systemlibrary="false">
-        <archive path="/SpringSimRefactor/lib/box2d/library/box2d_processing.jar"/>
-        <archive path="/SpringSimRefactor/lib/box2d/library/jbox2d-library-2.2.1-ds.jar"/>
+        <archive path="/PressureLab/lib/box2d/library/box2d_processing.jar"/>
+        <archive path="/PressureLab/lib/box2d/library/jbox2d-library-2.2.1-ds.jar"/>
     </library>
     <library name="controlP5" systemlibrary="false">
-        <archive path="/SpringSimRefactor/lib/controlP5/library/controlP5.jar"/>
+        <archive path="/PressureLab/lib/controlP5/library/controlP5.jar"/>
     </library>
     <library name="core" systemlibrary="false">
-        <archive path="/SpringSimRefactor/lib/core/core.jar"/>
-        <archive path="/SpringSimRefactor/lib/core/gluegen-rt-natives-macosx-universal.jar"/>
-        <archive path="/SpringSimRefactor/lib/core/gluegen-rt.jar"/>
-        <archive path="/SpringSimRefactor/lib/core/jogl-all-natives-macosx-universal.jar"/>
-        <archive path="/SpringSimRefactor/lib/core/jogl-all.jar"/>
+        <archive path="/PressureLab/lib/core/core.jar"/>
+        <archive path="/PressureLab/lib/core/gluegen-rt-natives-macosx-universal.jar"/>
+        <archive path="/PressureLab/lib/core/gluegen-rt.jar"/>
+        <archive path="/PressureLab/lib/core/jogl-all-natives-macosx-universal.jar"/>
+        <archive path="/PressureLab/lib/core/jogl-all.jar"/>
     </library>
     <library name="jssc" systemlibrary="false">
-        <archive path="/Users/rleedvs/Documents/workspace/p5Libraries/jssc/jssc-2.8.0.jar"/>
+        <archive path="/PressureLab/lib/jssc/jssc-2.8.0.jar"/>
     </library>
-    <library name="serialP5" systemlibrary="false">
-        <archive path="/SpringSimRefactor/lib/serial/library/serial.jar"/>
-    </library>
-    <library name="serialP5Full" systemlibrary="false">
-        <archive path="/SpringSimNew/lib/serial/library/jssc.jar"/>
-        <archive path="/SpringSimNew/lib/serial/library/serial.jar"/>
+    <library name="serial" systemlibrary="false">
+        <archive path="/PressureLab/lib/serial/library/serial.jar"/>
     </library>
 </eclipse-userlibraries>

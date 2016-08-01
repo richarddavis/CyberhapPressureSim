@@ -1,4 +1,4 @@
-package pressuresim;
+package pressurelab;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +101,7 @@ public class Main extends PApplet {
 	static ResearchData researchData;
 	
 	static public void main(String args[]) {
-		   PApplet.main(new String[] { "pressuresim.Main" });
+		   PApplet.main(new String[] { "pressurelab.Main" });
 			
 			Runtime.getRuntime().addShutdownHook(new Thread()
 			{
@@ -137,6 +137,7 @@ public class Main extends PApplet {
 //		participantId = Integer.parseInt(pID);
 		
 		participantId = 0;
+		//inputMode = HAPKIT_MODE;
 		inputMode = MOUSE_MODE;
 		researchData = new ResearchData(participantId, inputMode);
 		
