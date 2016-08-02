@@ -18,7 +18,7 @@ public class Piston {
 	int y;
 	int currentLen;
 	int originalLen;
-	int k;
+	int n;
 	String label;
 	boolean display_forces;
 	boolean display_k;
@@ -43,7 +43,7 @@ public class Piston {
 
 		this.x = _x;
 		this.y = _y;
-		this.k = _k;
+		this.n = _k;
 		this.originalLen = _length;
 		this.label = label;
 		this.parent = p;
@@ -71,7 +71,7 @@ public class Piston {
 
 		// Some stuff about how strong and bouncy the piston should be
 		// djd.maxForce = (float) (1000.0 * hand.body.m_mass);
-		djd.frequencyHz = (float) ((1 / (2 * Math.PI)) * (Math.sqrt(this.k / this.hand.body.m_mass)));
+		djd.frequencyHz = (float) ((1 / (2 * Math.PI)) * (Math.sqrt(this.n / this.hand.body.m_mass)));
 		djd.dampingRatio = 0.001f;
 
 		// Make the joint
@@ -140,7 +140,7 @@ public class Piston {
 				parent.fill(100);
 				parent.pushMatrix();
 				parent.textFont(p2);
-				parent.text("Pressure: " + String.format("%.2f", this.getForce()), dfx, dfy);
+				parent.text("Pressure: " + String.format("%.2f", this.getPressure()), dfx, dfy);
 				parent.setFont(p1);
 				parent.textSize(18);
 				parent.popMatrix();
@@ -177,8 +177,18 @@ public class Piston {
 		dj.setLength(box2d.scalarPixelsToWorld(len_pixels));
 	}
 
-	public float getForce() {
-		return (this.k * (dj.getLength() - this.getLength()));
+	public float getPressure() {
+//		return (this.n * (dj.getLength() - this.getLength()));
+		
+		// width of each piston is about 200 cm
+		// starting area is 0.12 cm-squared (0.2 * 0.6)
+		// dj.getLength() is the starting length (in world units) and does not change
+		// this.getLength() is the current length (in world units) and does change based on user interaction
+
+		// pressure = n / v
+		// v is given by 0.2 (width of beaker) * current length
+		
+		return (float) (this.n / (0.2 * this.getLength()));
 	}
 
 	public void setX(int x) {
@@ -208,11 +218,11 @@ public class Piston {
 	}
 
 	public int getK() {
-		return this.k;
+		return this.n;
 	}
 
 	public void setK(int k) {
-		this.k = k;
+		this.n = k;
 	}
 
 	public String getLabel() {

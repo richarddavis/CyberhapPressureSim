@@ -25,7 +25,7 @@ public class PistonCollection {
 	}
 	
 	public float getActiveForce() {
-		return this.activePiston.getForce();
+		return this.activePiston.getPressure();
 	}
 	
 	public void displayForces(boolean display_on) {
@@ -58,7 +58,7 @@ public class PistonCollection {
 			activePiston = p;
 		}
 		if(rData.getInputMode() == ResearchData.HAPKIT_MODE){
-			System.out.println("Setting Hapkit k-constant to:");
+			System.out.println("Setting Hapkit n-constant to:");
 			System.out.println(p.getK());
 			this.hapkit.setKConstant(p.getK());
 			// MAKES ALL OTHER SPRING ACT NORMALLY AGAIN:
