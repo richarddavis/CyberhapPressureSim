@@ -2,6 +2,7 @@ package pressurelab;
 
 
 import java.lang.reflect.Constructor;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
@@ -24,7 +25,7 @@ public class PistonCollection {
 		return pistons.add(p);
 	}
 	
-	public float getActiveForce() {
+	public BigDecimal getActiveForce() {
 		return this.activePiston.getPressure();
 	}
 	

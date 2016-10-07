@@ -1,6 +1,7 @@
 package pressurelab;
 
 import java.awt.Font;
+import java.math.BigDecimal;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.joints.DistanceJoint;
@@ -22,6 +23,7 @@ public class Piston {
 	String label;
 	boolean display_forces;
 	boolean display_k;
+	float init_volume = 1;
 
 	PApplet parent;
 	Hand hand;
@@ -72,7 +74,7 @@ public class Piston {
 		// Some stuff about how strong and bouncy the piston should be
 		// djd.maxForce = (float) (1000.0 * hand.body.m_mass);
 		djd.frequencyHz = (float) ((1 / (2 * Math.PI)) * (Math.sqrt(this.n / this.hand.body.m_mass)));
-		djd.dampingRatio = 0.001f;
+		djd.dampingRatio = 0;
 
 		// Make the joint
 		dj = (DistanceJoint) box2d.world.createJoint(djd);
@@ -124,13 +126,19 @@ public class Piston {
 
 			Font p1 = parent.getFont();
 			PFont p2 = parent.createFont("Verdana", 12);
+			
+			// Info text location
+			int info_x  = this.x + this.originalLen + 170;
+			int info_y1 = this.y;
+			int info_y2 = this.y + 20;
+					
 
 			if (display_k) {
 				parent.fill(120);
 				parent.pushMatrix();
 				parent.textFont(p2);
-				float d = this.getDisplacement();
-				parent.text("X: " + String.format("%.2f", d), dfx + 20, dfy + 20);
+				BigDecimal d = this.getVolume();
+				parent.text("Volume: " + String.format("%.2f", d), info_x, info_y1);
 				parent.setFont(p1);
 				parent.textSize(18);
 				parent.popMatrix();
@@ -140,7 +148,7 @@ public class Piston {
 				parent.fill(100);
 				parent.pushMatrix();
 				parent.textFont(p2);
-				parent.text("Pressure: " + String.format("%.2f", this.getPressure()), dfx, dfy);
+				parent.text("Pressure: " + String.format("%.2f", this.getPressure()), info_x, info_y2);
 				parent.setFont(p1);
 				parent.textSize(18);
 				parent.popMatrix();
@@ -151,33 +159,32 @@ public class Piston {
 		this.hand.draw();
 	}
 
-	public float getLength() {
+	public BigDecimal getLength() {
 		Vec2 v1 = new Vec2(0, 0);
 		dj.getAnchorA(v1);
 		Vec2 v2 = new Vec2(0, 0);
 		dj.getAnchorB(v2);
+		
+		float rawLen = (v2.sub(v1)).length();
+		rawLen *= 5;
+		BigDecimal roundLen = new BigDecimal(rawLen).setScale(2, BigDecimal.ROUND_HALF_UP);
 
-		// Convert them to screen coordinates
-		// v1 = box2d.coordWorldToPixels(v1);
-		// v2 = box2d.coordWorldToPixels(v2);
-
-		return (v2.sub(v1)).length();
+		return roundLen;
 	}
 	
-	public float getDisplacement() {
-		Vec2 v1 = new Vec2(0, 0);
-		dj.getAnchorA(v1);
-		Vec2 v2 = new Vec2(0, 0);
-		dj.getAnchorB(v2);
-		float newLength = (v2.sub(v1)).length();
-		return djd.length - newLength;
+	public BigDecimal getVolume() {
+		BigDecimal volume = this.getLength();
+		float radius = volume.floatValue() / 6;
+		BigDecimal area = new BigDecimal(Math.PI * Math.pow(radius, 2)).setScale(2, BigDecimal.ROUND_HALF_UP);
+		volume = volume.multiply(area);
+		return volume;
 	}
 
 	public void setLength(int len_pixels) {
 		dj.setLength(box2d.scalarPixelsToWorld(len_pixels));
 	}
 
-	public float getPressure() {
+	public BigDecimal getPressure() {
 //		return (this.n * (dj.getLength() - this.getLength()));
 		
 		// width of each piston is about 200 cm
@@ -187,8 +194,9 @@ public class Piston {
 
 		// pressure = n / v
 		// v is given by 0.2 (width of beaker) * current length
-		
-		return (float) (this.n / (0.2 * this.getLength()));
+		float pressure = this.n / this.getVolume().floatValue();
+		BigDecimal pressureRound = new BigDecimal(pressure).setScale(2, BigDecimal.ROUND_HALF_UP);
+		return pressureRound;
 	}
 
 	public void setX(int x) {

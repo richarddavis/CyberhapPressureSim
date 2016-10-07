@@ -23,6 +23,7 @@ public class Hand implements PConstants {
 	PImage inactive_hand_img;
 	PImage active_hand_img;
 	PImage current_hand_img;
+	PImage gas_mask;
 	
 	ResearchData rData;
 	
@@ -53,6 +54,7 @@ public class Hand implements PConstants {
 		this.inactive_hand_img = p.loadImage("hand.png");
 		this.active_hand_img = p.loadImage("active_hand.png");
 		this.current_hand_img = inactive_hand_img;
+		this.gas_mask = p.loadImage("mask.png");
 
 		this.w = this.inactive_hand_img.width / 6;
 		this.h = this.inactive_hand_img.height / 6;
@@ -116,8 +118,12 @@ public class Hand implements PConstants {
 			// And just draw a line
 			parent.stroke(0);
 			parent.strokeWeight(1);
-			parent.line(v1.x,v1.y,v2.x,v2.y);
+			//parent.line(v1.x,v1.y,v2.x,v2.y);
 		}
+		
+		// Draw mask to block out gas on left-hand side
+		parent.imageMode(PConstants.CORNER);
+		parent.image(gas_mask, this.x - gas_mask.width, this.y - gas_mask.height / 2);
 		
 		//parent.image(hand_img, this.x, this.y);
 		Vec2 pos = this.box2d.getBodyPixelCoord(this.body);
@@ -134,6 +140,7 @@ public class Hand implements PConstants {
 		parent.imageMode(PConstants.CENTER);
 		parent.image(current_hand_img, 0, 0);
 		parent.popMatrix(); // When we pop the matrix, the hand image is rotated and in the correct position.
+		
 	}
 
 	public int getX() {

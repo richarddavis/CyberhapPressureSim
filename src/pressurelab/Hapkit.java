@@ -39,7 +39,7 @@ public class Hapkit {
 		this.feedback_on = 1;
 		
 		// This delay is needed to ensure that the Hapkit is ready to receive the serial data.
-		this.p.delay(100);
+		this.p.delay(500);
 		this.writeToArduino();
 		
 	}

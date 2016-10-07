@@ -13,6 +13,7 @@ public class Ruler implements MouseListener, MouseMotionListener {
 	PApplet p;
 	int x;
 	int y;
+	int num_ticks;
 	int w;
 	int h;
 	int distance; //centimeters
@@ -22,10 +23,10 @@ public class Ruler implements MouseListener, MouseMotionListener {
 	private int diff_x;
 	private int diff_y;
 	
-	public Ruler(PApplet p, ControlP5 cp5, int x, int y, int w, int h, int distance){
+	public Ruler(PApplet p, ControlP5 cp5, int x, int y, int num_ticks, int h, int distance){
 		this.x = x;
 		this.y = y;
-		this.w = w;
+		this.num_ticks = num_ticks;
 		this.h = h;
 		this.distance = distance;
 		this.p = p;
@@ -35,13 +36,15 @@ public class Ruler implements MouseListener, MouseMotionListener {
 	}
 
 	public void draw() {
+		
+		int spacing = distance * 5;
+		
 		p.fill(255,250,205);
-		p.rect(x, y, w, h+20);
+		this.w = this.num_ticks * spacing + 30;
+		p.rect(x, y, w, h);
 		p.fill(0);
 		
-		int spacing = distance;
-		
-		for(int i=0; i<=10; i++){
+		for(int i=0; i<=5; i++){
 			p.line(this.x+10+(i*spacing), this.y + this.h/2, this.x+10+(i*spacing), this.y);
 			p.fill(50);
 			p.text(i, this.x+15+(i*spacing), this.y+15);

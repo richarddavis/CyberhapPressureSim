@@ -19,8 +19,8 @@ public class Main extends PApplet {
 	int inputMode;
 
 	//Container properties, dynamic generated from overall width, height
-	int width = 650;
-	int height = 700;
+	int width = 700;
+	int height = 750;
 	int spacing = (int) (width*0.02);
 	
 	//component widths
@@ -114,7 +114,7 @@ public class Main extends PApplet {
 	}
 	
 	public void setup() {
-		size(650, 700);
+		size(this.width, this.height);
 		//frame.setResizable(false);
 		background(255);
 		

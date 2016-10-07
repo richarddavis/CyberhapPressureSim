@@ -35,10 +35,12 @@ public class PressureDisplaySettings extends Component {
                 .setItemsPerRow(1)
                 .setSpacingRow(20)
                 .addItem("Pressure", 0)
-                .addItem("Displacement", 1)
+                .addItem("Volume", 1)
                 .addItem("Equilibrium Position", 2)
+                .addItem("Ruler", 3)
                 ;
 		cbs.plugTo(this);
+		cbs.toggle(3);
 		
 //		checkboxes.plugTo(this);
 		
@@ -113,6 +115,11 @@ public class PressureDisplaySettings extends Component {
 			this.c.displayEquilibriumPosition(false);
 		} else {
 			this.c.displayEquilibriumPosition(true);
+		}
+		if (values[3] == 1) {
+			this.c.displayRuler(false);
+		} else {
+			this.c.displayRuler(true);
 		}
 	}
 	

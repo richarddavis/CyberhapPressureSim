@@ -44,6 +44,7 @@ public class Canvas extends Component {
 	
 	int numPistons;
 	private Ruler ruler;
+	public boolean drawRuler = false;
 	ResearchData rData;
 	
 	Piston p1, p2, p3;
@@ -91,15 +92,15 @@ public class Canvas extends Component {
 		
 		box2d = new Box2DProcessing(parent);
 		box2d.createWorld();
-		box2d.setScaleFactor(400); // 500 pixels is 1 meter
+		box2d.setScaleFactor(200); // 500 pixels is 1 meter
 		box2d.setGravity(0, 0);
 		
 		// This prevents dynamic bodies from sticking to static ones
 		org.jbox2d.common.Settings.velocityThreshold = 0.2f;
 		
 		p1 = new Piston(this.x+100, Y1, 15, 300, "Piston A", this.parent, box2d, rData, "container_red.png");
-		p2 = new Piston(this.x+100, Y2, 35, 300, "Piston B", this.parent, box2d, rData, "container_blue.png");
-		p3 = new Piston(this.x+100, Y3, 55, 300, "Piston C", this.parent, box2d, rData, "container_yellow.png");
+		p2 = new Piston(this.x+100, Y2, 50, 300, "Piston B", this.parent, box2d, rData, "container_blue.png");
+		p3 = new Piston(this.x+100, Y3, 100, 300, "Piston C", this.parent, box2d, rData, "container_yellow.png");
 		
 		pc = new PistonCollection(rData, hapkit);
 		pc.add(p1);
@@ -124,7 +125,7 @@ public class Canvas extends Component {
 		Vec2 spacing2 = box2d.coordWorldToPixels(new Vec2(0, 1));
 		float one_meter = spacing2.sub(spacing1).length();
 		int spacing = (int) (one_meter/10);
-		ruler = new Ruler(parent, cp5, this.x+165, this.y+440, (int) one_meter + 50, 30, spacing);
+		ruler = new Ruler(parent, cp5, this.x+165, this.y+440, 5, 40, spacing);
 		
 //		delete1 = cp5.addButton("Delete1")
 //			     .setValue(0)
@@ -162,12 +163,6 @@ public class Canvas extends Component {
 	}
 	
 	public void draw(){
-
-		parent.fill(255);
-		parent.stroke(0);
-		parent.rect(x, y, w, h);
-		parent.textSize(18); 
-		parent.fill(0);
 		
 //		parent.pushMatrix();
 //		parent.imageMode(PConstants.CORNER);
@@ -177,6 +172,12 @@ public class Canvas extends Component {
 		pc.draw();
 //		floor.draw();
 		
+		parent.fill(0, 0, 0, 0);
+		parent.stroke(0);
+		parent.rect(x, y, w, h);
+		parent.textSize(18); 
+		parent.fill(0);
+		
 		// Draw neutral line
 		parent.imageMode(PConstants.CENTER);
 		// Hand-tweaked coordinates that put the neutral line at the exact right place (ugly)
@@ -184,7 +185,9 @@ public class Canvas extends Component {
 			parent.image(dotted_line_img, this.x + p1.originalLen + 23, Y2-10);
 		}
 		
-		ruler.draw();
+		if (this.drawRuler == true) {
+			ruler.draw();
+		}
 		
 //		parent.fill(255);
 //		parent.stroke(0);
@@ -237,6 +240,14 @@ public class Canvas extends Component {
 			this.draw_dotted_line = true;
 		} else {
 			this.draw_dotted_line = false;
+		}
+	}
+	
+	public void displayRuler(boolean b) {
+		if (b) {
+			this.drawRuler = true;
+		} else {
+			this.drawRuler = false;
 		}
 	}
 
